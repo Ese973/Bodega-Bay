@@ -12,6 +12,7 @@ qiime tools import \
 --output-path $OUTPUT
 
 
+
 # Step 2 Summarize Demultiplexed Sequences
 # Activate QIIME2/2024.2 and add Path Variables 
 module load QIIME2/2024.2
@@ -22,6 +23,7 @@ OUTPUT=/home/gas51591/boba/updated-database/analysis/data-sequences.qzv
 qiime demux summarize \
 --i-data $INPUT \
 --o-visualization $OUTPUT
+
 
 
 # Step 3 Denoise with DADA2
@@ -40,6 +42,7 @@ qiime dada2 denoise-paired \
 --o-representative-sequences $OUTPUT \
 --o-table /home/gas51591/boba/updated-database/analysis/18S-dada2-table.qza \
 --o-denoising-stats /home/gas51591/boba/updated-database/analysis/18S-dada2-stats.qza
+
 
 
 # Step 4 Exporting DADA2 Stats
@@ -63,6 +66,7 @@ qiime feature-table tabulate-seqs \
 --o-visualization /home/gas51591/boba/updated-database/analysis/denoised-rep-sequences.qzv
 
 
+
 # Step 5 BLAST Taxonomy 
 # Activate QIIME2/2024.2 and add Path Variables 
 module load QIIME2/2024.2
@@ -79,6 +83,8 @@ qiime feature-classifier classify-consensus-blast \
 --o-classification /home/gas51591/boba/updated-database/analysis/18S-rep-sequences-taxonomy.qza \
 --o-search-results /home/gas51591/boba/updated-database/analysis/18S-rep-sequences-tax-search-results.qza
 
+
+
 # Step 6 Taxonomic Visualization 
 # Activate QIIME2/2024.2 and add Path Variables 
 module load QIIME2/2024.2
@@ -89,6 +95,7 @@ OUTPUT=/home/gas51591/boba/updated-database/analysis/18S-rep-sequences-taxonomy.
 qiime metadata tabulate \
 --m-input-file $INPUT \
 --o-visualization $OUTPUT
+
 
 # Step 7 Create Tree for Phylogentic Diversity Analysis 
 # Activate QIIME2-2024.2 in Miniconda3 Enviorment 
