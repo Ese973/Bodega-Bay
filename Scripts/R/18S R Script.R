@@ -2,19 +2,7 @@
 library(tidyverse)
 library(qiime2R)
 library(phyloseq)
-library(tibble)
-library(dplyr)
 library(ggpubr)
-library(ggplot2)
-library(randomcoloR)
-library(cowplot)
-library(RColorBrewer)
-library(readxl)
-library(gt)
-library(ggh4x)
-library(gridExtra)
-library(fantaxtic)
-library(MicrobiotaProcess)
 
 # Importing and cleaning data
 # Imported taxonomy, dada2 table, rooted tree, and metadata from local storage
