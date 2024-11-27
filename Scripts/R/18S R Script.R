@@ -3,6 +3,9 @@ library(tidyverse)
 library(qiime2R)
 library(phyloseq)
 library(ggpubr)
+library(randomcoloR)
+library(cowplot)
+library(RColorBrewer)
 
 # Importing and cleaning data
 # Imported taxonomy, dada2 table, rooted tree, and metadata from local storage
