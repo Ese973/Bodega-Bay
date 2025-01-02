@@ -85,7 +85,7 @@ phylo_normalized_nematoda_18s <- transform_sample_counts(phylo_nematoda_18s, fun
 
 
 # Plotting for Relative Abundance
-
+ 
 # Raw Sediment
 # Agglomerated taxa down to V4 rank and made the phyloseq object a data frame
 glom_raw_18s <- tax_glom(phylo_normalized_raw_18s, taxrank = "V4")
