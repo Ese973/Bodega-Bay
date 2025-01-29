@@ -99,7 +99,8 @@ qiime feature-classifier classify-consensus-blast \
 --i-reference-reads /home/gas51591/boba/16s/tax/SILVA138-nr99_sequences_16S.qza \
 --i-reference-taxonomy /home/gas51591/boba/16s/tax/SILVA138-nr99_ref_taxonomy_16S.qza \
 --p-maxaccepts 1 \
---p-perc-identity .90 \
+--p-perc-identity .80 \
+--p-min-consensus .51 \
 --o-classification /home/gas51591/boba/16s/analysis/16s-rep-sequences-taxonomy.qza \
 --o-search-results /home/gas51591/boba/16s/analysis/16s-rep-sequences-tax-search-results.qza
 
