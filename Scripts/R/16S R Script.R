@@ -165,13 +165,20 @@ phylo_16s_ord_plot <- plot_ordination(phylo_normalized_16s, phylo_16s_ord, type=
 phylo_16s_ord_plot
 
 
-phylo_16s_ord_plot_2 <- plot_ordination(phylo_normalized_16s, phylo_16s_ord, type="samples", color="Location", shape="Habitat", title="16s All ASVs") + 
-  geom_point(size=3) +
-  theme_bw() +
+phylo_16s_ord_plot_2 <- plot_ordination(phylo_normalized_16s, phylo_16s_ord, type="samples", color="Location", shape="Habitat", title="16S All ASVs") + 
   scale_color_manual(values = c("saddlebrown","seagreen3"),breaks = c("Bare Sediment", "Sea Grass")) +
   #ylim(-0.45,0.45) +
   # xlim(-0.6,0.6) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme(axis.title.y = element_text(angle = 90, hjust = 0.5, vjust = 0.5,size = 14, color = "black", face = "bold")) + # adjusts text of y axis
+  theme(axis.title.x = element_text(angle = 0, hjust = 0.5, vjust = 0.5,size = 14, color = "black", face = "bold")) + # adjusts text of y axis
+  theme(axis.text.y = element_text(angle = 0, hjust = 0.5, vjust = 0.5,size = 12, color = "black")) + # adjusts text of y axis
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5, vjust = 0.5,size = 12, color = "black")) + # adjusts text of y axis
+  geom_point(aes(color =  Location, shape = Habitat), alpha = 0.7, size = 4) +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(axis.line = element_line(color = "black"),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  theme(plot.title = element_text(color = "black", face = "bold"))
 
 phylo_16s_ord_plot_2
 
@@ -199,7 +206,7 @@ permutest(beta_16s_results_location)
 
 ###################### Looking for sulfur-utilizing symbionts ####
 
-phylo_ss <- phylo_16s
+phylo_ss <- phylo_normalized_16s
 
 #phylo_ss <- prune_samples(sample_sums(phylo_ss) >= 1, phylo_ss)
 
@@ -802,3 +809,4 @@ hm_gen_location <- Heatmap(Z.Score.gen_location, name = "Z-score, CLR", col = co
 
 
 hm_gen_location
+
