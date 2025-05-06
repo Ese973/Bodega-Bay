@@ -17,6 +17,8 @@ library(fantaxtic) #
 library(MicrobiotaProcess)
 library(reltools)
 library(Biostrings)
+library(ggtree)
+library(ggtreeExtra)
 
 ##################### Importing and cleaning data ####
 
@@ -172,6 +174,7 @@ data_ludox_18s$V4[data_ludox_18s$Abundance < 0.05] <- "Other (< 5% abund)"
 ludox_taxonomy_bar_18s <- ggplot(data_ludox_18s, aes(x = Sample, y = Abundance, fill = V4)) +
   theme_bw() +
   geom_bar(stat = "identity") + 
+  geom_text(aes(label = ifelse(round(Abundance*100) >= 5, paste(round(Abundance*100, digits = 0), "%"), "")), size = 3, position = position_stack(vjust = 0.5)) +
   scale_color_manual(values = c("#543005", "#8C510A", "#BF812D", "#DFC27D", "#F6E8C3","#F5F5F5", "#C7EAE5", "#80CDC1","#35978F","gray", "grey45")) + 
   scale_fill_manual(values = c("#543005", "#8C510A", "#BF812D", "#DFC27D", "#F6E8C3","#F5F5F5","#C7EAE5", "#80CDC1", "#35978F","gray", "grey45"),
                     name = "Ludox Rank", breaks = c("Apicomplexa", "Cercozoa","Chlorophyta",
@@ -266,22 +269,36 @@ phylo_18s_ord_ludox_plot
 
 
 phylo_18s_ord_ludox_plot_2 <- plot_ordination(phylo_normalized_ludox_18s, phylo_18s_ludox_ord, type="samples", color="Location", shape="Habitat", title="18S Ludox ASVs") + 
-  geom_point(size=3) +
-  theme_bw() +
   scale_color_manual(values = c("saddlebrown","seagreen3"),breaks = c("Bare Sediment", "Sea Grass")) +
   #ylim(-0.45,0.45) +
   #xlim(-0.6,0.6) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme(axis.title.y = element_text(angle = 90, hjust = 0.5, vjust = 0.5,size = 14, color = "black", face = "bold")) + # adjusts text of y axis
+  theme(axis.title.x = element_text(angle = 0, hjust = 0.5, vjust = 0.5,size = 14, color = "black", face = "bold")) + # adjusts text of y axis
+  theme(axis.text.y = element_text(angle = 0, hjust = 0.5, vjust = 0.5,size = 12, color = "black")) + # adjusts text of y axis
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5, vjust = 0.5,size = 12, color = "black")) + # adjusts text of y axis
+  geom_point(aes(color =  Location, shape = Habitat), alpha = 0.7, size = 4) +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(axis.line = element_line(color = "black"),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  theme(plot.title = element_text(color = "black", face = "bold"))
 
 phylo_18s_ord_ludox_plot_2
 
 phylo_18s_ord_raw_plot_2 <- plot_ordination(phylo_normalized_raw_18s, phylo_18s_raw_ord, type="samples", color="Location", shape="Habitat", title="18S Raw ASVs") + 
-  geom_point(size=3) +
-  theme_bw() +
   scale_color_manual(values = c("saddlebrown","seagreen3"),breaks = c("Bare Sediment", "Sea Grass")) +
   #ylim(-0.45,0.45) +
   #xlim(-0.6,0.6) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme(axis.title.y = element_text(angle = 90, hjust = 0.5, vjust = 0.5,size = 14, color = "black", face = "bold")) + # adjusts text of y axis
+  theme(axis.title.x = element_text(angle = 0, hjust = 0.5, vjust = 0.5,size = 14, color = "black", face = "bold")) + # adjusts text of y axis
+  theme(axis.text.y = element_text(angle = 0, hjust = 0.5, vjust = 0.5,size = 12, color = "black")) + # adjusts text of y axis
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5, vjust = 0.5,size = 12, color = "black")) + # adjusts text of y axis
+  geom_point(aes(color =  Location, shape = Habitat), alpha = 0.7, size = 4) +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(axis.line = element_line(color = "black"),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  theme(plot.title = element_text(color = "black", face = "bold"))
 
 phylo_18s_ord_raw_plot_2
 
@@ -588,8 +605,13 @@ ad_18s_raw_habitat <- alpha_div_18S_raw %>%
   theme(legend.position="none")
 
 ad_18s_raw_habitat
-                                         
 
+
+
+
+
+
+save_fasta(symbionts_18s, file = "sequences.fasta", rank = "V22")
 
 
 
