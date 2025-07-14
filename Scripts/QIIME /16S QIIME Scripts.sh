@@ -13,10 +13,25 @@ qiime tools import \
 
 
 
-# Step 2 Summarize Demultiplexed Sequences
+# Step 2 Use cutadapt to remove primers
+module load QIIME2/2024.10
+INPUT=/home/gas51591/boba/16s/analysis/data-sequences.qza
+OUTPUT=/home/gas51591/boba/16s/ca_analysis/data-sequences-ca-trimmed.qza
+
+# Sript
+qiime cutadapt trim-paired \
+  --i-demultiplexed-sequences $INPUT \
+  --p-adapter-r TTACCGCGGCKGCTGRCACACAATTACCATA \
+  --p-adapter-f ATTAGAWACCCBNGTAGTCCGGCTGGCTGACT \
+  --p-error-rate 0.2 \
+  --o-trimmed-sequences $OUTPUT
+
+
+
+# Step 3 Summarize Demultiplexed Sequences
 # Activate QIIME2/2024.2 and add Path Variables 
 module load QIIME2/2024.2
-INPUT=/home/gas51591/boba/16s/analysis/data-sequences.qza
+INPUT=/home/gas51591/boba/16s/analysis/data-sequences-ca-trimmed.qza
 OUTPUT=/home/gas51591/boba/16s/analysis/data-sequences.qzv
 
 # Script
@@ -26,26 +41,27 @@ qiime demux summarize \
 
 
 
-# Step 3 Denoise with DADA2
+# Step 4 Denoise with DADA2
 # Activate QIIME2/2024.2-amplicon and add Path Variables 
 module load QIIME2/2024.2-amplicon
-INPUT=/home/gas51591/boba/16s/analysis/data-sequences.qza
+INPUT=/home/gas51591/boba/16s/analysis/data-sequences-ca-trimmed.qza
 OUTPUT=/home/gas51591/boba/16s/analysis/16s-denoised-rep-sequences.qza
 
 # Script
 qiime dada2 denoise-paired \
 --i-demultiplexed-seqs $INPUT \
 --p-trim-left-f 0 \
---p-trunc-len-f 280 \
+--p-trunc-len-f 250 \
 --p-trim-left-r 0 \
---p-trunc-len-r 135 \
+--p-trunc-len-r 200 \
+--p-n-threads 12 \
 --o-representative-sequences $OUTPUT \
 --o-table /home/gas51591/boba/16s/analysis/16s-dada2-table.qza \
 --o-denoising-stats /home/gas51591/boba/16s/analysis/16s-dada2-stats.qza
 
 
 
-# Step 4 Exporting DADA2 Stats
+# Step 5 Exporting DADA2 Stats
 # Activate QIIME2/2024.2-amplicon and add Path Variables 
 module load QIIME2/2024.2-amplicon
 INPUT=/home/gas51591/boba/16s/analysis
@@ -67,7 +83,7 @@ qiime feature-table tabulate-seqs \
 
 
 
-# Step 5 Import Taxonomy Files
+# Step 6 Import Taxonomy Files
 # Activate QIIME2/2024.2-amplicon and add Path Variables 
 module load QIIME2/2024.2-amplicon
 INPUT=/home/gas51591/boba/16s/tax
@@ -87,7 +103,7 @@ qiime tools import \
 
 
 
-# Step 6 BLAST Taxonomy 
+# Step 7 BLAST Taxonomy 
 # Activate QIIME2/2024.2-amplicon and add Path Variables 
 module load QIIME2/2024.2-amplicon
 INPUT=/home/gas51591/boba/16s/tax
@@ -106,7 +122,7 @@ qiime feature-classifier classify-consensus-blast \
 
 
 
-# Step 7 Taxonomic Visualization 
+# Step 8 Taxonomic Visualization 
 # Activate QIIME2/2024.2-amplicon and add Path Variables 
 module load QIIME2/2024.2-amplicon
 INPUT=/home/gas51591/boba/16s/analysis/16s-rep-sequences-taxonomy.qza
@@ -119,7 +135,7 @@ qiime metadata tabulate \
 
 
 
-# Step 8 Create Tree for Phylogentic Diversity Analysis 
+# Step 9 Create Tree for Phylogentic Diversity Analysis 
 # Activate QIIME2-2024.2 in Miniconda3 Enviorment 
 module load Miniconda3
 source activate /home/gas51591/conda-envs/envs/QIIME2-2024.2
