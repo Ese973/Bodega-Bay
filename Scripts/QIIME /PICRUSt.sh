@@ -1,8 +1,8 @@
 # Step 1 export reference sequences and feature table from QIIME2 artifacts
 # Activate QIIME2/2024.2 and add Path Variables 
 module load QIIME2/2024.2-amplicon
-REFSEQ=/home/gas51591/boba/16s/ca_analysis/16s-denoised-rep-sequences.qza
-REFTABLE=/home/gas51591/boba/16s/ca_analysis/16s-dada2-table.qza
+REFSEQ=/home/gas51591/boba/16s/analysis/data-sequences-ca-trimmed-dada2.qza
+REFTABLE=/home/gas51591/boba/16s/analysis/16s-dada2-table-ca.qza
 SEQOUT=/home/gas51591/boba/16s/picrust2/output/refseq/
 TABLEOUT=/home/gas51591/boba/16s/picrust2/output/biomtable/
 
