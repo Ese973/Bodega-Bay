@@ -14,7 +14,7 @@ qiime tools import \
 
 
 # Step 2 Use cutadapt to remove primers
-module load QIIME2/2024.10
+module load QIIME2/2024.2
 INPUT=/home/gas51591/boba/16s/analysis/data-sequences.qza
 OUTPUT=/home/gas51591/boba/16s/ca_analysis/data-sequences-ca-trimmed.qza
 
